@@ -40,7 +40,6 @@ const registerPet = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, pet, "Pet registered successfully"));
 });
 
-
 const removePet = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
@@ -55,5 +54,13 @@ const removePet = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, null, "Pet removed successfully"));
 });
 
+export const getAllPets = async (req, res) => {
+  try {
+    const pets = await Pet.find(); // Fetch all pets from MongoDB
+    res.json(pets);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching pets", error });
+  }
+};
 export { removePet };
 export { registerPet };

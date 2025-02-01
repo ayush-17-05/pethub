@@ -1,8 +1,15 @@
 import Router from "express";
-import { registerPet, removePet } from "../controllers/pet.controller.js";
-// import { registerPet } from "../controllers/pet.controller.js";
+import {
+  registerPet,
+  removePet,
+  getAllPets,
+} from "../controllers/pet.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
+
 const petRouter = Router();
+
+// ✅ Add a GET route to fetch all pets
+petRouter.get("/", getAllPets);
 
 petRouter.route("/addPet").post(
   upload.fields([

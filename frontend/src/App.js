@@ -12,6 +12,7 @@ import LoginPage from "./Components/login/login";
 import RegisterPage from "./Components/Register/register";
 import PetManager from "./Components/Admin/admin";
 import AdminLoginPage from "./Components/adminLogin/adminLogin";
+import PetForm from "./Components/Admin/Addpet";
 
 const Layout = ({ children }) => (
   <>
@@ -45,6 +46,14 @@ const App = () => {
           path="/admin"
           element={
             <PetManager />
+            // <Layout>
+            // </Layout>
+          }
+        />
+        <Route
+          path="/addPet"
+          element={
+            <PetForm />
             // <Layout>
             // </Layout>
           }

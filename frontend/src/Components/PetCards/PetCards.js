@@ -1,21 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function Events() {
-  const events = [
-    {
-      type: "Dog",
-      name: "Buddy",
-      age: "3 years",
-      description: "A friendly golden retriever.",
-      imageUrl:
-        "https://images.unsplash.com/photo-1584283201516-4624475c2944?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3RyYXklMjBkb2dzfGVufDB8fDB8fHww",
-    },
-  ];
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/v1/pet");
+        setEvents(response.data);
+      } catch (err) {
+        setError("Failed to fetch pet data.", err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPets();
+  }, []);
+
+  if (loading) return <p>Loading pets...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="events">
-      {events.map((event) => (
+      {events.map((event, index) => (
         <div
+          key={index}
           className="event-card"
           style={{
             border: "1px solid #ccc",
@@ -26,15 +39,20 @@ function Events() {
           }}
         >
           <img
-            src={event.imageUrl}
-            alt={event.title}
+            src={
+              event.avatar
+                ? event.avatar // ✅ Use Cloudinary URL directly
+                : "https://via.placeholder.com/300"
+            }
+            alt={event.petName}
             style={{ width: "100%", borderRadius: "8px 8px 0 0" }}
           />
-          <h3>{event.type}</h3>
+
+          <h3>{event.animal}</h3>
           <p className="nameage">
-            <strong>Name:</strong> {event.name}
+            <strong>Name:</strong> {event.petName}
             <br />
-            <strong>Age:</strong> {event.age}
+            <strong>Age:</strong> {event.age} years
           </p>
           <p>{event.description}</p>
         </div>
