@@ -55,7 +55,7 @@ const Footer = () => {
             <i className="fa fa-whatsapp"></i> WhatsApp
           </a>
         </p>
-        <p>&copy; 2024 NFC3_FOURPLAY</p>
+        <p>&copy; 2024 </p>
       </div>
     </footer>
   );
